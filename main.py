@@ -54,7 +54,6 @@ class DiscordVoiceAFK:
         while self.is_connected:
             if self.heartbeat_interval:
                 await asyncio.sleep(self.heartbeat_interval / 1000)
-                # التأكد مرة أخرى من حالة الاتصال قبل الإرسال
                 if not self.is_connected:
                     break
                 heartbeat_payload = {"op": 1, "d": self.sequence}
@@ -77,7 +76,6 @@ class DiscordVoiceAFK:
                 
                 if hello_data['op'] == 10:  
                     self.heartbeat_interval = hello_data['d']['heartbeat_interval']
-                    # تشغيل الهارت بيت
                     asyncio.create_task(self.send_heartbeat(ws))
                 
                 identify_payload = {
